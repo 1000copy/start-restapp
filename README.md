@@ -22,3 +22,5 @@
 ## 总结
 
 express.js 框架本身就是支持RESTful app的。用它编程序，差不多就是想什么想什么了。可以看代码理解我的意思。
+
+配合文章： https://segmentfault.com/a/1190000006155947
