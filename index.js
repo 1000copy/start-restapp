@@ -21,9 +21,22 @@ var users = [
    }
 ]
 
+app.put('/user/:id', function (req, res) {
+  var userkey = parseInt(req.params.id) 
+  users[userkey] = req.body
+  res.end( JSON.stringify(users));
+})
+app.delete('/user/:id', function (req, res) {
+  var userkey = parseInt(req.params.id) 
+  users.splice(userkey,1)
+  res.end( JSON.stringify(users));
+})
 app.get('/user/:id', function (req, res) {
   var userkey = parseInt(req.params.id) 
   res.end( JSON.stringify(users[userkey]));
+})
+app.get('/users', function (req, res) {
+  res.end( JSON.stringify(users));
 })
 app.post('/user', function (req, res) {
   users.push(req.body)
