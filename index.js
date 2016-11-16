@@ -1,23 +1,19 @@
 var express = require('express');
 var app = express();
+var path = require('path')
 var fs = require("fs");
 var bodyParser = require('body-parser')
 app.use(bodyParser.json())
+app.use('/',express.static(path.join(__dirname, 'public')))
 var users = [
    {
       "name" : "1",
-      "password" : "password1",
-      "profession" : "teacher",
    },
    {
       "name" : "2",
-      "password" : "password1",
-      "profession" : "teacher",
    },
    {
       "name" : "3",
-      "password" : "password1",
-      "profession" : "teacher",
    }
 ]
 

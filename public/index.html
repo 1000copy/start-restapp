@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+ 
+<html lang="en">
+<head>
+<title>json restful app</title>
+<script data-cfasync="false" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script data-cfasync="false" src="https://unpkg.com/vue@2.0.6/dist/vue.js"></script>
+
+<script>
+
+</script>
+</head>
+<body>
+  <div id="app">
+    <h2>users</h2>
+    <div>
+        <h3>add </h3>
+        <label for="name">name</label>
+        <input type="text" v-model="newItem"></input>
+        <button @click="post1()">submit</button>
+    </div>
+      <ul>
+      <li v-for="(item,index) in items">
+        <input type="text" v-model="item.name" ></input>
+        <input type="button" value="X" @click="rm(index)"></input>
+        <input type="button" value="Save" @click="save(index)"></input>
+      </li>
+    </ul>
+  </div>
+
+<script>
+    new Vue(
+    {
+      el:'#app',
+      data(){
+        return {
+          items:[],
+          newItem:'',
+        }
+      },
+      mounted:function(){
+        var self = this
+        this.list(function(data){
+          self.items = data
+        })
+      },
+      methods:{
+        rm:function(index){
+          var items = this.items
+          this.del(index,function(){
+            $('.error').html('delete OK')
+              items.splice(index,1)
+          })
+        },
+        del:function(id,cb){
+          $.ajax({
+              type: 'DELETE',
+              url: '/user/'+id,
+              success: cb
+          });
+        },
+        put:function(id,data,cb){
+          $.ajax({
+              type: 'PUT',
+              url: '/user/'+id,
+              data: data,
+              success: cb,
+              contentType: "application/json",
+              dataType: 'json'
+              });
+        }, 
+        save:function(index){
+          var name = this.items[index].name
+          var data = {
+                  "name" : name,
+               }
+          var d = JSON.stringify(data)
+          this.put(index,d,function () {
+            $('.error').html('edit OK')
+          })
+        },
+        post1:function(){
+      // e.preventDefault();
+          var self = this
+          var name = this.newItem
+          var data = {
+                  "name" : name,
+               }
+           var d = JSON.stringify(data)
+           this.post(d,function(d){
+              $('.error').html('add OK:' + data.name)
+              self.items.push(data)
+           })
+        },
+        post:function(data,cb){
+         $.ajax({
+              type: 'POST',
+              url: '/user',
+              data: data,
+              success: cb,
+              contentType: "application/json",
+              dataType: 'json'
+          });
+        },
+        list:function(cb){
+            $.getJSON('/users',cb)
+        }
+      }
+    })
+
+</script>  
+</body>
+</html>

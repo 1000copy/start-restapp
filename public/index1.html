@@ -1,0 +1,136 @@
+<!-- 此文件的存在，是为了通过对比，了解到vue.js(index.html)用起来多么方便。 -->
+<!DOCTYPE html>
+ 
+<html lang="en">
+<head>
+<title>json restful app</title>
+<script data-cfasync="false" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+    function getUsers(){
+        $.getJSON('/users',function(data){
+            $('.error').html('get users OK')
+            $('#result').html(JSON.stringify(data,null, 2))
+        })
+    }
+    function post1(){
+      // e.preventDefault();
+      var name = $('#name').val()
+      var data = {
+              "name" : name,
+           }
+       var d = JSON.stringify(data)
+       post(d,function(d){
+          $('.error').html('add OK:' + data.name)
+       })
+    }
+    function post(data,cb){
+       $.ajax({
+            type: 'POST',
+            url: '/user',
+            data: data,
+            success: cb,
+            contentType: "application/json",
+            dataType: 'json'
+        });
+    }
+    function del(id,cb){
+        $.ajax({
+            type: 'DELETE',
+            url: '/user/'+id,
+            success: cb
+        });
+    }
+    function del1(){
+      var index = $('#delindex').val()
+      del(index,function(){
+        $('.error').html('delete OK')
+      })
+    }
+    function postState(e){
+      var f = $('#addform')
+      if (f.css('display') == 'none')
+        f.show('slow')
+      else
+        f.hide('slow')
+    }
+    function editState(e){
+
+      var f = $('#editform')
+      console.log(f.css('display'))
+      if (f.css('display') == 'none')
+        f.show('slow')
+      else
+        f.hide('slow')
+    }
+    function delState(e){
+
+      var f = $('#delform')
+      console.log(f.css('display'))
+      if (f.css('display') == 'none')
+        f.show('slow')
+      else
+        f.hide('slow')
+    }
+    function put(id,data){
+        $.ajax({
+            type: 'PUT',
+            url: '/user/'+id,
+            data: data,
+            success: cb,
+            contentType: "application/json",
+            dataType: 'json'
+        });
+    }    
+    function put1(){
+      var name = $('#editname').val()
+      var index = $('#index').val()
+      var data = {
+              "name" : name,
+           }
+      var d = JSON.stringify(data)
+      put(index,d,function () {
+        $('.error').html('edit OK')
+      })
+    }
+</script>
+</head>
+<body>
+  <h2>users</h2>
+  <button onclick="getUsers()">all(get)</button>
+  <button onclick="postState()">add</button>
+  <button onclick="delState()">delete(delete)</button>
+  <button onclick="editState()">edit(put)</button>
+  <p class="error" style="color:red"></p>
+  <div id="addform" style="display:none">
+      <h2>add </h2>
+      <form  >
+      <label for="name">name</label>
+      <input type="text" id="name"></input>
+      
+    </form>
+    <button onclick="post1()">submit</button>
+  </div>
+  <div id="editform" style="display:none">
+      <h2>edit </h2>
+      <form  >
+      <label for="index">index</label>
+      <input type="text" id="index"></input>
+      <label for="name">name</label>
+      <input type="text" id="editname"></input>
+    </form>
+    <button onclick="put1()">submit</button>
+  </div>
+  <div id="delform" style="display:none">
+      <h2>delete </h2>
+      <form  >
+      <label for="index">index</label>
+      <input type="text" id="delindex"></input>
+    </form>
+    <button onclick="del1()">submit</button>
+  </div>
+  <xmp id="result">      
+  </xmp>
+  
+</body>
+</html>
