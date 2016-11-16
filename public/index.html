@@ -21,6 +21,7 @@
     </div>
       <ul style="list-style: none">
       <li v-for="(item,index) in items">
+        <label>index:{{index+1}}</label>
         <input type="text" v-model="item.name" ></input>
         <input type="button" value="X" @click="rm(index)"></input>
         <input type="button" value="Save" @click="save(index)"></input>

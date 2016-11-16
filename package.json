@@ -1,12 +1,12 @@
 {
-  "name": "stormpath-notes",
+  "name": "restful-app",
   "version": "1.0.0",
-  "description": "Server for Stormpath Notes iOS Sample App",
+  "description": "restful app",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Edward Jiang",
+  "author": "1000copy",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
