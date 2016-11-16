@@ -15,18 +15,18 @@
   <div id="app">
     <h2>users</h2>
     <div>
-        <h3>add </h3>
         <label for="name">name</label>
         <input type="text" v-model="newItem"></input>
-        <button @click="post1()">submit</button>
+        <button @click="post1()">add</button>
     </div>
-      <ul>
+      <ul style="list-style: none">
       <li v-for="(item,index) in items">
         <input type="text" v-model="item.name" ></input>
         <input type="button" value="X" @click="rm(index)"></input>
         <input type="button" value="Save" @click="save(index)"></input>
       </li>
     </ul>
+    <p class="error" style="color:red"></p>
   </div>
 
 <script>
